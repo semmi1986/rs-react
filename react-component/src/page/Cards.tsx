@@ -1,38 +1,24 @@
-import React, { Component } from 'react';
-import { Center, Wrap, WrapItem } from '@chakra-ui/react';
+import { Wrap } from '@chakra-ui/react';
+import { Component } from 'react';
 
-export default class Cards extends Component<unknown> {
+import product from '../assets/api.json';
+import CardItem from '../components/CardItem';
+import { DataState } from '../types';
+
+export default class Cards extends Component<unknown, { items: DataState[] }> {
   constructor(props: unknown) {
     super(props);
-    this.state = {};
+    this.state = { items: product.products };
   }
 
   render() {
+    // console.log(this.state.items);
     return (
-      <div>
-        <Wrap>
-          <WrapItem>
-            <Center w="180px" h="80px" bg="red.200">
-              item 1
-            </Center>
-          </WrapItem>
-          <WrapItem>
-            <Center w="180px" h="80px" bg="red.200">
-              item 1
-            </Center>
-          </WrapItem>
-          <WrapItem>
-            <Center w="180px" h="80px" bg="red.200">
-              item 1
-            </Center>
-          </WrapItem>
-          <WrapItem>
-            <Center w="180px" h="80px" bg="red.200">
-              item 1
-            </Center>
-          </WrapItem>
-        </Wrap>
-      </div>
+      <Wrap>
+        {this.state.items.map((item) => (
+          <CardItem key={item.id} {...item} />
+        ))}
+      </Wrap>
     );
   }
 }

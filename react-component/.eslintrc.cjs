@@ -40,5 +40,6 @@ module.exports = {
     'react/prefer-stateless-function': 'off',
     'react/no-children-prop': 'off',
     'react/destructuring-assignment': 'off',
+    'react/jsx-props-no-spreading': 'off',
   },
 };

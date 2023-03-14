@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom';
 import AboutUs from './page/AboutUs';
 import HomePage from './page/HomePage';
 import NotFound from './page/NotFound';
-import Layout from './components/Layout';
+import Layout from './page/Layout';
 
 function App() {
   return (
