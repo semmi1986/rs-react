@@ -36,23 +36,27 @@ export default class CardItem extends Component<DataState> {
               />
             </Box>
             <Stack
-              spacing="8"
+              spacing="3"
               display="flex"
               alignItems="center"
               justifyContent="center"
             >
-              <Heading size="md">Living room Sofa</Heading>
-              <Text fontSize="0.7rem">{description}</Text>
-              <Text color="rgba(228, 76, 76, 0.976)" fontSize="2xl">
-                ${price}
-              </Text>
+              <Heading size="md">{title}</Heading>
+              <Text fontSize="1rem">{description}</Text>
             </Stack>
           </CardBody>
           <Divider />
-          <CardFooter>
+          <CardFooter
+            display="flex"
+            alignItems="center"
+            justifyContent="space-between"
+          >
             <Button variant="solid" colorScheme="blue">
               Buy now
             </Button>
+            <Text color="rgba(228, 76, 76, 0.976)" fontSize="2xl">
+              ${price}
+            </Text>
           </CardFooter>
         </Card>
       </WrapItem>
