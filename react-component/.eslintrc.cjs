@@ -38,5 +38,7 @@ module.exports = {
     'react/jsx-uses-react': 'off',
     'react/prop-types': 'off',
     'react/prefer-stateless-function': 'off',
+    'react/no-children-prop': 'off',
+    'react/destructuring-assignment': 'off',
   },
 };
