@@ -16,50 +16,47 @@ import { DataState } from '../types';
 
 export default class CardItem extends Component<DataState> {
   render() {
-    const { title, images, description, price } = this.props;
+    const { title, thumbnail, description, price } = this.props;
     return (
-      <WrapItem>
-        <Card
-          w="sm"
-          h="500px"
-          m="10px"
-          bgGradient="linear(to-t, #d6d6d6, #3182ce)"
-        >
-          <CardBody>
-            <Box display="flex" alignItems="center" justifyContent="center">
-              <Image
-                src={images[0]}
-                alt={title}
-                borderRadius="lg"
-                boxSize="200px"
-                mb={2}
-              />
-            </Box>
-            <Stack
-              spacing="3"
+      <div className="cards" data-testid="cards">
+        <WrapItem>
+          <Card w="sm" h="500px" m="10px" bg="#3182ce61">
+            <CardBody>
+              <Box display="flex" alignItems="center" justifyContent="center">
+                <Image
+                  src={thumbnail}
+                  alt="user image"
+                  borderRadius="lg"
+                  boxSize="200px"
+                  mb={2}
+                />
+              </Box>
+              <Stack
+                spacing="3"
+                display="flex"
+                alignItems="center"
+                justifyContent="center"
+              >
+                <Heading size="md">{title}</Heading>
+                <Text fontSize="1rem">{description}</Text>
+              </Stack>
+            </CardBody>
+            <Divider />
+            <CardFooter
               display="flex"
               alignItems="center"
-              justifyContent="center"
+              justifyContent="space-between"
             >
-              <Heading size="md">{title}</Heading>
-              <Text fontSize="1rem">{description}</Text>
-            </Stack>
-          </CardBody>
-          <Divider />
-          <CardFooter
-            display="flex"
-            alignItems="center"
-            justifyContent="space-between"
-          >
-            <Button variant="solid" colorScheme="blue">
-              Buy now
-            </Button>
-            <Text color="rgba(228, 76, 76, 0.976)" fontSize="2xl">
-              ${price}
-            </Text>
-          </CardFooter>
-        </Card>
-      </WrapItem>
+              <Button variant="solid" colorScheme="blue">
+                Buy now
+              </Button>
+              <Text color="rgba(228, 76, 76, 0.976)" fontSize="2xl">
+                ${price}
+              </Text>
+            </CardFooter>
+          </Card>
+        </WrapItem>
+      </div>
     );
   }
 }

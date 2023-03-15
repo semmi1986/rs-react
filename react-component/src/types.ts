@@ -1,13 +1,13 @@
 export type DataState = {
-  id: number;
+  readonly id: number;
   title: string;
   description: string;
   price: number;
-  discountPercentage: number;
-  rating: number;
-  stock: number;
-  brand: string;
-  category: string;
+  readonly discountPercentage: number;
+  readonly rating: number;
+  readonly stock: number;
+  readonly brand: string;
+  readonly category: string;
   thumbnail: string;
-  images: string[];
+  readonly images: string[];
 };
