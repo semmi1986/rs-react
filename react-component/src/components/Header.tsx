@@ -1,8 +1,12 @@
+import { Text } from '@chakra-ui/react';
 import { Component } from 'react';
 import { Link, NavLink } from 'react-router-dom';
+import { withRouter, WithRouterProps } from '../HOC/WithRouteHOC';
 
-export default class Header extends Component {
+class Header extends Component<WithRouterProps> {
   render() {
+    const titleLink = this.props.location.pathname.slice(1);
+
     return (
       <header className="header">
         <Link to="https://rs.school/react/">
@@ -12,6 +16,8 @@ export default class Header extends Component {
             alt="RS-Shcoll"
           />
         </Link>
+
+        <Text color="white">{titleLink === '' ? 'Home page' : titleLink}</Text>
 
         <nav>
           <ul className="items">
@@ -27,3 +33,5 @@ export default class Header extends Component {
     );
   }
 }
+
+export default withRouter(Header);
