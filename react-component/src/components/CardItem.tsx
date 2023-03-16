@@ -25,7 +25,7 @@ export default class CardItem extends Component<DataState> {
               <Box display="flex" alignItems="center" justifyContent="center">
                 <Image
                   src={thumbnail}
-                  alt="user image"
+                  alt="product image"
                   borderRadius="lg"
                   boxSize="200px"
                   mb={2}

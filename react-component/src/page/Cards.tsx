@@ -16,7 +16,14 @@ export default class Cards extends Component<unknown, { items: DataState[] }> {
     return (
       <Wrap>
         {this.state.items.map((item) => (
-          <CardItem key={item.id} {...item} />
+          <CardItem
+            key={item.id}
+            id={item.id}
+            title={item.title}
+            thumbnail={item.thumbnail}
+            description={item.description}
+            price={item.price}
+          />
         ))}
       </Wrap>
     );
