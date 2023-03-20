@@ -27,6 +27,9 @@ class Header extends Component<WithRouterProps> {
             <li className="item">
               <NavLink to="/about">About</NavLink>
             </li>
+            <li className="item">
+              <NavLink to="/form">Form</NavLink>
+            </li>
           </ul>
         </nav>
       </header>

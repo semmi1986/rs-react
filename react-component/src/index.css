@@ -149,12 +149,12 @@ body {
 .item {
   font-size: 1.5rem;
   color: #ffffff;
-  margin: 0 2rem;
+  margin: 0 1rem;
   font-weight: 600;
   position: relative;
 }
 
-.item:last-child {
+.items:last-child {
   margin: 0;
 }
 
