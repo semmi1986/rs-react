@@ -29,6 +29,7 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': 'error',
     '@typescript-eslint/no-non-null-assertion': 'off',
     '@typescript-eslint/no-var-reqiures': 'off',
+    '@typescript-eslint/no-empty-interface': 'off',
     'comma-dangle': ['error', 'only-multiline'],
     'import/no-unresolved': 'error',
     'prettier/prettier': ['error', { endOfLine: 'auto' }],
