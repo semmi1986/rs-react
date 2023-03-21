@@ -1,5 +1,6 @@
 /* eslint-disable no-console */
-/* eslint-disable class-methods-use-this */
+/* eslint-disable react/sort-comp */
+/* eslint-disable react/no-access-state-in-setstate */
 import {
   Box,
   Button,
@@ -21,10 +22,16 @@ import React, { Component } from 'react';
 import Title from '../components/Title';
 
 interface FormState {
-  valueForm: {
-    title: string;
-    description: string;
-  };
+  arrItem: [
+    {
+      id: number;
+      title: string;
+      description: string;
+      category: string;
+      data: string;
+      price: number;
+    }
+  ][];
 }
 
 interface FormsProps {}
@@ -33,84 +40,93 @@ export default class Form extends Component<FormsProps, FormState> {
   constructor(props: FormsProps) {
     super(props);
     this.state = {
-      valueForm: {
-        title: '',
-        description: '',
-      },
+      arrItem: [],
     };
-
-    this.changeDescription = this.changeDescription.bind(this);
-    this.changeTitle = this.changeTitle.bind(this);
+    // this.changeDescription = this.changeDescription.bind(this);
+    // this.changeTitle = this.changeTitle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    console.log(this.state.valueForm);
+  description = React.createRef<HTMLTextAreaElement>();
+
+  titleInput = React.createRef<HTMLInputElement>();
+
+  categorySelect = React.createRef<HTMLSelectElement>();
+
+  dataSelect = React.createRef<HTMLInputElement>();
+
+  priceInput = React.createRef<HTMLInputElement>();
+
+  handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.setState({
-      valueForm: {
-        title: '',
-        description: '',
-      },
+    this.state.arrItem.push({
+      id: this.state.arrItem.length,
+      title: this.titleInput.current?.value,
+      description: this.description.current?.value,
+      category: this.categorySelect.current?.value,
+      data: this.dataSelect.current?.value,
+      price: Number(this.priceInput.current?.value),
     });
-  }
+    this.setState({ arrItem: this.state.arrItem });
+  };
 
-  changeTitle(e: React.ChangeEvent<HTMLInputElement>) {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        valueForm: {
-          ...prevState.valueForm,
-          title: e.target.value,
-        },
-      };
-    });
-  }
+  // changeTitle(e: React.ChangeEvent<HTMLInputElement>) {
+  //   this.setState((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       valueForm: {
+  //         ...prevState.valueForm,
+  //         title: e.target.value,
+  //       },
+  //     };
+  //   });
+  // }
 
-  changeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
-    this.setState((prevState) => {
-      return {
-        ...prevState,
-        valueForm: {
-          ...prevState.valueForm,
-          description: e.target.value,
-        },
-      };
-    });
-  }
+  // changeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
+  //   this.setState((prevState) => {
+  //     return {
+  //       ...prevState,
+  //       valueForm: {
+  //         ...prevState.valueForm,
+  //         description: e.target.value,
+  //       },
+  //     };
+  //   });
+  // }
 
   render() {
     return (
       <div>
         <Title>Form</Title>
         <form onSubmit={this.handleSubmit}>
-          <FormControl isRequired mb={3}>
+          <FormControl mb={3}>
             <FormLabel>Title</FormLabel>
             <Input
               placeholder="product name"
-              value={this.state.valueForm.title}
-              onChange={this.changeTitle}
+              ref={this.titleInput}
+              // value={this.state.valueForm.title}
+              // onChange={this.changeTitle}
             />
           </FormControl>
 
-          <FormControl isRequired mb={3}>
+          <FormControl mb={3}>
             <FormLabel>Description</FormLabel>
             <Textarea
               placeholder="description..."
-              value={this.state.valueForm.description}
-              onChange={this.changeDescription}
+              ref={this.description}
+              // onChange={this.changeDescription}
             />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Data</FormLabel>
-            <Input type="datetime-local" />
+            <Input type="datetime-local" ref={this.dataSelect} />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Price</FormLabel>
             <NumberInput min={0}>
-              <NumberInputField />
+              <NumberInputField ref={this.priceInput} />
               <NumberInputStepper>
                 <NumberIncrementStepper />
                 <NumberDecrementStepper />
@@ -125,7 +141,7 @@ export default class Form extends Component<FormsProps, FormState> {
 
           <FormControl mb={3}>
             <FormLabel>Category</FormLabel>
-            <Select placeholder="Select category">
+            <Select placeholder="Select category" ref={this.categorySelect}>
               <option>Phone</option>
               <option>laptop</option>
             </Select>
