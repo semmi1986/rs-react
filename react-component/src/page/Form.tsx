@@ -8,17 +8,12 @@ import {
   FormControl,
   FormLabel,
   Input,
-  NumberDecrementStepper,
-  NumberIncrementStepper,
-  NumberInput,
-  NumberInputField,
-  NumberInputStepper,
   Radio,
   Select,
   Stack,
   Textarea,
 } from '@chakra-ui/react';
-import React, { Component } from 'react';
+import { Component, createRef } from 'react';
 import Title from '../components/Title';
 
 interface FormState {
@@ -29,127 +24,98 @@ interface FormState {
       description: string;
       category: string;
       data: string;
-      price: number;
+      price: string | undefined;
+      img: string;
     }
   ][];
 }
 
-interface FormsProps {}
-
-export default class Form extends Component<FormsProps, FormState> {
-  constructor(props: FormsProps) {
+export default class Form extends Component<object, FormState> {
+  constructor(props: object) {
     super(props);
     this.state = {
       arrItem: [],
     };
-    // this.changeDescription = this.changeDescription.bind(this);
-    // this.changeTitle = this.changeTitle.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  description = React.createRef<HTMLTextAreaElement>();
+  formRef = createRef<HTMLFormElement>();
 
-  titleInput = React.createRef<HTMLInputElement>();
+  titleRef = createRef<HTMLInputElement>();
 
-  categorySelect = React.createRef<HTMLSelectElement>();
+  descRef = createRef<HTMLTextAreaElement>();
 
-  dataSelect = React.createRef<HTMLInputElement>();
+  categoryRef = createRef<HTMLSelectElement>();
 
-  priceInput = React.createRef<HTMLInputElement>();
+  dataRef = createRef<HTMLInputElement>();
+
+  priceRef = createRef<HTMLInputElement>();
+
+  imgRef = createRef<HTMLInputElement>();
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    this.state.arrItem.push({
-      id: this.state.arrItem.length,
-      title: this.titleInput.current?.value,
-      description: this.description.current?.value,
-      category: this.categorySelect.current?.value,
-      data: this.dataSelect.current?.value,
-      price: Number(this.priceInput.current?.value),
+    (this.state.arrItem as [object]).push({
+      id: this.state.arrItem.length + 1,
+      title: this.titleRef.current?.value,
+      description: this.descRef.current?.value,
+      category: this.categoryRef.current?.value,
+      data: this.dataRef.current?.value,
+      price: this.priceRef.current?.value,
+      img: URL.createObjectURL(
+        this.imgRef.current?.files![0] as Blob | MediaSource
+      ),
     });
     this.setState({ arrItem: this.state.arrItem });
+    this.formRef.current?.reset();
+    console.log(this.state.arrItem);
   };
-
-  // changeTitle(e: React.ChangeEvent<HTMLInputElement>) {
-  //   this.setState((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       valueForm: {
-  //         ...prevState.valueForm,
-  //         title: e.target.value,
-  //       },
-  //     };
-  //   });
-  // }
-
-  // changeDescription(e: React.ChangeEvent<HTMLTextAreaElement>) {
-  //   this.setState((prevState) => {
-  //     return {
-  //       ...prevState,
-  //       valueForm: {
-  //         ...prevState.valueForm,
-  //         description: e.target.value,
-  //       },
-  //     };
-  //   });
-  // }
 
   render() {
     return (
       <div>
         <Title>Form</Title>
-        <form onSubmit={this.handleSubmit}>
+        <form onSubmit={this.handleSubmit} ref={this.formRef}>
           <FormControl mb={3}>
             <FormLabel>Title</FormLabel>
-            <Input
-              placeholder="product name"
-              ref={this.titleInput}
-              // value={this.state.valueForm.title}
-              // onChange={this.changeTitle}
-            />
+            <Input placeholder="product name" ref={this.titleRef} />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Description</FormLabel>
-            <Textarea
-              placeholder="description..."
-              ref={this.description}
-              // onChange={this.changeDescription}
-            />
+            <Textarea placeholder="description..." ref={this.descRef} />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Data</FormLabel>
-            <Input type="datetime-local" ref={this.dataSelect} />
+            <Input type="datetime-local" ref={this.dataRef} />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Price</FormLabel>
-            <NumberInput min={0}>
-              <NumberInputField ref={this.priceInput} />
-              <NumberInputStepper>
-                <NumberIncrementStepper />
-                <NumberDecrementStepper />
-              </NumberInputStepper>
-            </NumberInput>
+            <Input type="number" ref={this.priceRef} />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Image</FormLabel>
-            <Input type="file" accept="image/jpeg,image/png,image/gif" />
+            <Input
+              type="file"
+              accept="image/jpeg,image/png,image/gif"
+              ref={this.imgRef}
+            />
           </FormControl>
 
           <FormControl mb={3}>
             <FormLabel>Category</FormLabel>
-            <Select placeholder="Select category" ref={this.categorySelect}>
+            <Select placeholder="Select category" ref={this.categoryRef}>
               <option>Phone</option>
               <option>laptop</option>
             </Select>
           </FormControl>
 
           <Stack direction="row" mb={3}>
-            <Radio value="1">New product</Radio>
-            <Radio value="2">Used product</Radio>
+            <Radio>New product</Radio>
+            <Radio>Used product</Radio>
           </Stack>
 
           <Box>
