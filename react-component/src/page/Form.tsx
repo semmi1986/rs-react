@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/lines-between-class-members */
 /* eslint-disable no-console */
 /* eslint-disable react/sort-comp */
 /* eslint-disable react/no-access-state-in-setstate */
@@ -9,6 +10,7 @@ import {
   FormLabel,
   Input,
   Radio,
+  RadioGroup,
   Select,
   Stack,
   Textarea,
@@ -26,11 +28,24 @@ interface FormState {
       data: string;
       price: string | undefined;
       img: string;
+      status: string;
+      isAgree: boolean;
     }
   ][];
 }
 
 export default class Form extends Component<object, FormState> {
+  formRef = createRef<HTMLFormElement>();
+  titleRef = createRef<HTMLInputElement>();
+  descRef = createRef<HTMLTextAreaElement>();
+  categoryRef = createRef<HTMLSelectElement>();
+  dataRef = createRef<HTMLInputElement>();
+  priceRef = createRef<HTMLInputElement>();
+  imgRef = createRef<HTMLInputElement>();
+  statusNewRef = createRef<HTMLInputElement>();
+  statusUsedRef = createRef<HTMLInputElement>();
+  agreeRef = createRef<HTMLInputElement>();
+
   constructor(props: object) {
     super(props);
     this.state = {
@@ -38,20 +53,6 @@ export default class Form extends Component<object, FormState> {
     };
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
-  formRef = createRef<HTMLFormElement>();
-
-  titleRef = createRef<HTMLInputElement>();
-
-  descRef = createRef<HTMLTextAreaElement>();
-
-  categoryRef = createRef<HTMLSelectElement>();
-
-  dataRef = createRef<HTMLInputElement>();
-
-  priceRef = createRef<HTMLInputElement>();
-
-  imgRef = createRef<HTMLInputElement>();
 
   handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -65,6 +66,11 @@ export default class Form extends Component<object, FormState> {
       img: URL.createObjectURL(
         this.imgRef.current?.files![0] as Blob | MediaSource
       ),
+      status: {
+        newProduct: this.statusNewRef.current!.checked && 'New product',
+        UsedProduct: this.statusUsedRef.current!.checked && 'Used product',
+      },
+      isAgree: this.agreeRef.current?.checked,
     });
     this.setState({ arrItem: this.state.arrItem });
     this.formRef.current?.reset();
@@ -76,27 +82,27 @@ export default class Form extends Component<object, FormState> {
       <div>
         <Title>Form</Title>
         <form onSubmit={this.handleSubmit} ref={this.formRef}>
-          <FormControl mb={3}>
+          <FormControl isRequired mb={3}>
             <FormLabel>Title</FormLabel>
             <Input placeholder="product name" ref={this.titleRef} />
           </FormControl>
 
-          <FormControl mb={3}>
+          <FormControl isRequired mb={3}>
             <FormLabel>Description</FormLabel>
             <Textarea placeholder="description..." ref={this.descRef} />
           </FormControl>
 
-          <FormControl mb={3}>
+          <FormControl isRequired mb={3}>
             <FormLabel>Data</FormLabel>
             <Input type="datetime-local" ref={this.dataRef} />
           </FormControl>
 
-          <FormControl mb={3}>
+          <FormControl isRequired mb={3}>
             <FormLabel>Price</FormLabel>
             <Input type="number" ref={this.priceRef} />
           </FormControl>
 
-          <FormControl mb={3}>
+          <FormControl isRequired mb={3}>
             <FormLabel>Image</FormLabel>
             <Input
               type="file"
@@ -105,7 +111,7 @@ export default class Form extends Component<object, FormState> {
             />
           </FormControl>
 
-          <FormControl mb={3}>
+          <FormControl isRequired mb={3}>
             <FormLabel>Category</FormLabel>
             <Select placeholder="Select category" ref={this.categoryRef}>
               <option>Phone</option>
@@ -113,13 +119,19 @@ export default class Form extends Component<object, FormState> {
             </Select>
           </FormControl>
 
-          <Stack direction="row" mb={3}>
-            <Radio>New product</Radio>
-            <Radio>Used product</Radio>
-          </Stack>
+          <RadioGroup mb={3}>
+            <Stack direction="row">
+              <Radio value="1" ref={this.statusNewRef}>
+                New product
+              </Radio>
+              <Radio value="2" ref={this.statusUsedRef}>
+                Used product
+              </Radio>
+            </Stack>
+          </RadioGroup>
 
           <Box>
-            <Checkbox>I agree</Checkbox>
+            <Checkbox ref={this.agreeRef}>I agree</Checkbox>
           </Box>
 
           <Button
