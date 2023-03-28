@@ -16,7 +16,7 @@ module.exports = {
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.json',
+    project: './react-component/tsconfig.json',
   },
   plugins: ['react', '@typescript-eslint', 'prettier'],
   rules: {
@@ -32,7 +32,12 @@ module.exports = {
     '@typescript-eslint/no-empty-interface': 'off',
     'comma-dangle': ['error', 'only-multiline'],
     'import/no-unresolved': 'error',
-    'prettier/prettier': ['error', { endOfLine: 'auto' }],
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
     'react/display-name': 'off',
     'react-hooks/exhaustive-deps': 'warn',
     'react-hooks/rules-of-hooks': 'error',
