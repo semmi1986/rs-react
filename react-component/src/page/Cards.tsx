@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Wrap } from '@chakra-ui/react';
 import { useState } from 'react';
 import product from '../assets/api.json';
